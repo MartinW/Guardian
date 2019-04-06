@@ -58,7 +58,7 @@ public struct GuardianMiddleware: Middleware {
             guard requestsLeft >= 0 else {
                 
                 let logger = try request.make(Logger.self)
-                logger.error("Rate limit: \(request.http.remotePeer.hostname) \(request.http.urlString) - limit: \(self.limit)")
+                logger.info("Rate Limit - Host: \(String(describing: request.http.remotePeer.hostname)) Request: \(request.http.urlString) Limit: \(self.limit)")
                 
                 guard let closure = self.bodyClosure,let body = try closure(request) else {
                     let json = ["status":"429","message":"Visit too often, please try again later"]
